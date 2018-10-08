@@ -20,15 +20,16 @@ def train():
     alexnet.train()
 
     for index, (x, y) in enumerate(trainLoader, 0):
-        if isGPU:
-            x = x.cuda()
-            y = y.cuda()
-            alexnet.cuda()
+
 
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
         x = x.type(torch.FloatTensor)
         y = y.type(torch.LongTensor)
+
+        if isGPU:
+            x = x.cuda()
+            y = y.cuda()
 
         optim.zero_grad()
         output = alexnet(x)
@@ -46,22 +47,18 @@ def val():
     alexnet.eval()
 
     for index, (x, y) in enumerate(valLoader, 0):
-        if isGPU:
-            x = x.cuda()
-            y = y.cuda()
-            alexnet.cuda()
-
-
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
         x = x.type(torch.FloatTensor)
         y = y.type(torch.LongTensor)
 
+        if isGPU:
+            x = x.cuda()
+            y = y.cuda()
+
         predict = alexnet(x)
         loss = criterion(predict, y)
         print('validation data loss is ' + str(loss))
-
-
 
 
 if __name__ == '__main__':
