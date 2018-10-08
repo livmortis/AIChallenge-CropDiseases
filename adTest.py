@@ -19,10 +19,13 @@ if torch.cuda.is_available():
 def test():
     listPre = []
     for testItem in testTs:
-        if isGPU:
-            testItem.cuda()
+
 
         testItem = testItem.unsqueeze(dim=0)    #重要。
+
+        if isGPU:
+            testItem.cuda()
+            
         prediction = model(testItem)
         # print('prediction is : '+ str(prediction))
         listPre.append(prediction)
