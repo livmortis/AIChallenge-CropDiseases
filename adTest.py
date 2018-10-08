@@ -24,8 +24,8 @@ def test():
         testItem = testItem.unsqueeze(dim=0)    #重要。
 
         if isGPU:
-            testItem.cuda()
-            
+            testItem = testItem.cuda()
+
         prediction = model(testItem)
         # print('prediction is : '+ str(prediction))
         listPre.append(prediction)
