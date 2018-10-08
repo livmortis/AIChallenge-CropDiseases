@@ -108,8 +108,8 @@ def readTrainAndValPic():
 
 
     '''制作数据集'''
-    imgTNp = np.zeros([len(listPicTrain), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=int)
-    imgVNp = np.zeros([len(listPicVal), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=int)
+    imgTNp = np.zeros([len(listPicTrain), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
+    imgVNp = np.zeros([len(listPicVal), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
 
 
     t = 0

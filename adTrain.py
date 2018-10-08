@@ -23,6 +23,7 @@ def train():
         if isGPU:
             x = x.cuda()
             y = y.cuda()
+            alexnet.cuda()
 
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
@@ -48,6 +49,8 @@ def val():
         if isGPU:
             x = x.cuda()
             y = y.cuda()
+            alexnet.cuda()
+
 
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
