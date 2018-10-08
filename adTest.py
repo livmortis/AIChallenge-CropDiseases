@@ -5,6 +5,7 @@ import aConfigration
 import numpy as np
 import json
 import os
+from tqdm import tqdm
 
 MODEL_SAVED_PATH  = "/model_saved/alexmodel.pkl"
 DATA_ROOT_PATH = '../datas'
@@ -19,22 +20,55 @@ if torch.cuda.is_available():
 def test():
     listPre = []
     i = 0
-    for testItem in testTs:
+    n = 0
+    if aConfigration.PREVIEW_TEST:
+        N = 54
+    else :
+        N = aConfigration.TEST_PIC_NUM
+
+    batch_size = 9
+    batch_site = []
+    while n < N:
+        n += batch_size
+        if n < N:
+            n1 = n - batch_size
+            n2 = n
+        else:
+            n1 = n2
+            n2 = N
+
+        batch_site.append([n1, n2])
 
 
-        testItem = testItem.unsqueeze(dim=0)    #重要。
+    prediction = []
+
+    # for testItem in testTs:
+    for site in tqdm(batch_site):
+        test_batch = testTs[site[0]:site[1]]
+        test_batch = test_batch.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
+
+
+        # testItem = testItem.unsqueeze(dim=0)    #重要。
 
         if isGPU:
-            testItem = testItem.cuda()
-
-        prediction = model(testItem)
+            test_batch = test_batch.cuda()
+        print("size: "+ str(test_batch.shape))
+        prediction_batch = model(test_batch)
+        # prediction = model(testItem)
         print('prediction\'s index is : '+ str(i))
-        # print('prediction is : '+ str(prediction))
-        listPre.append(prediction)
-
         i += 1
 
-    outputJson(listPre)
+        prediction_batch = prediction_batch.cpu().data.numpy()
+
+        # listPre.append(prediction)
+        for out in prediction_batch:
+            K = 5
+            index = np.argpartition(out, -K)[-K:]
+            prediction.append(index)
+        print('prediction :' + str(prediction))
+
+    # outputJson(listPre)
+    outputJson(prediction)
 
 def outputJson(listPre):
     listPreNp = np.array(listPre)

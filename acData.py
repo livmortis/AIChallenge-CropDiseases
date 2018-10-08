@@ -33,8 +33,8 @@ def readTrainAndValLabel():
     valJFile = open(dataRootPath + validPath + validLabel)
     tLabDict = json.load(trainJFile)
     vLabDict = json.load(valJFile)
-    print("see "+ str(tLabDict[:20]))
-    print("see see "+ str(type(tLabDict)))
+    # print("see "+ str(tLabDict[:20]))
+    # print("see see "+ str(type(tLabDict)))
     return tLabDict, vLabDict
 
 
@@ -52,8 +52,8 @@ def readTrainAndValPic():
 
         # 少量数据预览模式
     if(aConfigration.PREVIEW):
-        tLabDict = tLabDict[:300]
-        vLabDict = vLabDict[:300]
+        tLabDict = tLabDict[:aConfigration.PREVIEW_TRAIN_NUM]
+        vLabDict = vLabDict[:aConfigration.PREVIEW_TRAIN_NUM]
 
 
     for TlabItem in tLabDict:
@@ -146,7 +146,7 @@ def readTrainAndValPic():
 def readTestPic():
     testFiles = os.listdir(dataRootPath + testPath + commonImgPath)
     if aConfigration.PREVIEW_TEST:
-        testFiles = testFiles[:50]
+        testFiles = testFiles[:aConfigration.PREVIEW_TEST_NUM]
     testImgNp = np.zeros([len(testFiles), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3])
     k = 0
     for testFile in testFiles:
