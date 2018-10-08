@@ -11,9 +11,17 @@ DATA_ROOT_PATH = '../datas'
 SUBMIT = '/submit'
 SUBMIT_JOSN = '/submitjson.json'
 
+isGPU = False
+
+if torch.cuda.is_available():
+    isGPU = True
+
 def test():
     listPre = []
     for testItem in testTs:
+        if isGPU:
+            testItem.cuda()
+
         testItem = testItem.unsqueeze(dim=0)    #重要。
         prediction = model(testItem)
         # print('prediction is : '+ str(prediction))
@@ -51,4 +59,7 @@ if __name__ == '__main__':
 
     model = torch.load(DATA_ROOT_PATH + MODEL_SAVED_PATH)
     model.eval()
+
+    if isGPU:
+        model.cuda()
     test()

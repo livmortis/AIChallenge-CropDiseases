@@ -10,11 +10,19 @@ import os
 MODEL_SAVED_PATH  = "/model_saved"
 MODEL_SAVED_FILE = "/alexmodel.pkl"
 DATA_ROOT_PATH = '../datas'
+isGPU = False
+
+if torch.cuda.is_available():
+    isGPU = True
+
 
 def train():
     alexnet.train()
 
     for index, (x, y) in enumerate(trainLoader, 0):
+        if isGPU:
+            x = x.cuda()
+            y = y.cuda()
 
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
@@ -37,6 +45,10 @@ def val():
     alexnet.eval()
 
     for index, (x, y) in enumerate(valLoader, 0):
+        if isGPU:
+            x = x.cuda()
+            y = y.cuda()
+
         # 补充处理数据 , 现在x是torch的tensor，y是int数字。
         x = x.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
         x = x.type(torch.FloatTensor)
@@ -59,6 +71,10 @@ if __name__ == '__main__':
     alexnet = acModel.build_model()     # model初始化
     optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR)   # optim初始化
     criterion = torch.nn.CrossEntropyLoss()         # loss初始化
+
+    if isGPU:
+        alexnet.cuda()
+
 
     if not os.path.exists(DATA_ROOT_PATH + MODEL_SAVED_PATH):
         os.mkdir(DATA_ROOT_PATH + MODEL_SAVED_PATH)
