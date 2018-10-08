@@ -77,8 +77,8 @@ def outputJson(listPre):
     i = 0
     for pre in range(len(listPre)):
 
-        dict['disease_class'] = pre
         dict['image_id'] = testImgName[i]
+        dict['disease_class'] = pre
 
         i += 1
         list.append(dict)
