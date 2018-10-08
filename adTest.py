@@ -65,7 +65,7 @@ def test():
             K = 5
             index = np.argpartition(out, -K)[-K:]
             prediction.append(index)
-        print('prediction :' + str(prediction))
+        # print('prediction :' + str(prediction))
 
     # outputJson(listPre)
     outputJson(prediction)
