@@ -18,6 +18,7 @@ if torch.cuda.is_available():
 
 def test():
     listPre = []
+    i = 0
     for testItem in testTs:
 
 
@@ -27,8 +28,11 @@ def test():
             testItem = testItem.cuda()
 
         prediction = model(testItem)
+        print('prediction\'s index is : '+ str(i))
         # print('prediction is : '+ str(prediction))
         listPre.append(prediction)
+
+        i += 1
 
     outputJson(listPre)
 
