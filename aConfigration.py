@@ -6,7 +6,7 @@ EVAL = "eval"
 LR = 0.001
 BATCH_SIZE = 128
 LABEL_NUMS = 61
-EPOCH = 3
+EPOCH = 80
 
 PREVIEW = False
 PREVIEW_TEST = False
