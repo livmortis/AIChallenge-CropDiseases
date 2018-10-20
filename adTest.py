@@ -98,8 +98,14 @@ def outputJson(listPre):
 def test2():
     print(6)
 
-    print("see shape: "+str(testTs.shape))
-    prediction = model(testTs.cuda())
+    # print("see shape: "+str(testTs.shape))
+    # prediction = model(testTs.cuda())
+    prediction1 = model(testTs1)
+    prediction2 = model(testTs2)
+    prediction3 = model(testTs3)
+
+    prediction = torch.cat([prediction1, prediction2, prediction3])
+
     print(7)
     pres = []
     for i in range(len(prediction)):
@@ -117,7 +123,22 @@ if __name__ == '__main__':
     testTs = torch.from_numpy(testNp)
     print(2)
     testTs = testTs.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
-    testTs = testTs.type(torch.FloatTensor)
+    print(2.5)
+
+
+    #下面防止内存爆炸
+    testTs1 = testTs[0: len(testTs) / 3]
+    testTs2 = testTs[len(testTs) / 3 : len(testTs) / 3 * 2]
+    testTs3 = testTs[len(testTs) / 3 * 2 : len(testTs) / 3]
+
+    testTs1 = testTs1.type(torch.FLoatTensor).cuda(0)
+    testTs2 = testTs2.type(torch.FLoatTensor).cuda(1)
+    testTs3 = testTs3.type(torch.FLoatTensor).cuda(2)
+
+    # testTs = testTs.type(torch.FloatTensor)
+
+
+
     print(3)
     model = torch.load(DATA_ROOT_PATH + MODEL_SAVED_PATH)
     model.eval()
