@@ -10,7 +10,8 @@ from tqdm import tqdm
 MODEL_SAVED_PATH  = "/model_saved/alexmodel.pkl"
 DATA_ROOT_PATH = '../datas'
 SUBMIT = '/submit'
-SUBMIT_JOSN = '/submitjson.json'
+# SUBMIT_JOSN = '/submitjson.json'
+SUBMIT_JOSN = '/submitjson_eval.json'   #temper
 
 isGPU = False
 
@@ -54,6 +55,7 @@ def test():
             test_batch = test_batch.cuda()
         print("size: "+ str(test_batch.shape))
         prediction_batch = model(test_batch)
+        print("look san xia: ", str(prediction_batch))
         # prediction = model(testItem)
         print('prediction\'s index is : '+ str(i))
         i += 1
@@ -72,16 +74,16 @@ def test():
 
 def outputJson(listPre):
     listPreNp = np.array(listPre)
-    dict = {}
     list = []
     i = 0
     for pre in range(len(listPre)):
-
+        dict = {}
         dict['image_id'] = testImgName[i]
-        dict['disease_class'] = pre
+        dict['disease_class'] = str(pre)
 
         i += 1
         list.append(dict)
+    print('dict: '+ str(list))
 
     if not os.path.exists(DATA_ROOT_PATH + SUBMIT):
         os.mkdir(DATA_ROOT_PATH + SUBMIT)
@@ -89,18 +91,40 @@ def outputJson(listPre):
     jsFile = open(DATA_ROOT_PATH + SUBMIT + SUBMIT_JOSN, 'w', encoding='utf-8')
     res = json.dumps(list, ensure_ascii=False)
     jsFile.write(res)
-
     print('dict: '+ str(list))
+
+
+
+def test2():
+    print(6)
+
+    print("see shape: "+str(testTs.shape))
+    prediction = model(testTs.cuda())
+    print(7)
+    pres = []
+    for i in range(len(prediction)):
+        #print('see predict: '+str(prediction[i][:20]))
+        pre = prediction[i]
+        pre = pre.detach().cpu().numpy().argmax()
+        pres.append(pre)
+    print('see index: '+str(prediction.argmax(1)))
+    outputJson(pres)
+
 
 if __name__ == '__main__':
     testNp, testImgName = acData.readTestPic()
+    print(1)
     testTs = torch.from_numpy(testNp)
+    print(2)
     testTs = testTs.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
     testTs = testTs.type(torch.FloatTensor)
-
+    print(3)
     model = torch.load(DATA_ROOT_PATH + MODEL_SAVED_PATH)
     model.eval()
+    print(4)
 
     if isGPU:
         model.cuda()
-    test()
+    print(5)
+
+    test2()
