@@ -15,6 +15,13 @@ commonImgPath = '/images/'
 trainLabel = '/AgriculturalDisease_train_annotations.json'
 validLabel = '/AgriculturalDisease_validation_annotations.json'
 
+dataSavedPath = "/data_np_saved"
+dataSavedImgTNp = "/imgTNp.npy"
+dataSavedImgVNp = "/imgVNp.npy"
+dataSavedLabTNp = "/labTNp.npy"
+dataSavedLabVNp = "/labVNp.npy"
+dataSavedTestNp = "/testNp.npy"
+dataSavedTestName = "/testImgName.npy"
 
 def main():
     readTrainAndValPic()
@@ -141,6 +148,12 @@ def readTrainAndValPic():
                        + ' '
                        + str(len(imgVNp)))
 
+    if not os.path.exists(dataRootPath + dataSavedPath):
+        os.mkdir(dataRootPath + dataSavedPath)
+    np.save(dataRootPath + dataSavedPath + dataSavedImgTNp, imgTNp)
+    np.save(dataRootPath + dataSavedPath + dataSavedImgVNp, imgVNp)
+    np.save(dataRootPath + dataSavedPath + dataSavedLabTNp, labTNp)
+    np.save(dataRootPath + dataSavedPath + dataSavedLabVNp, labVNp)
     return imgTNp, imgVNp, labTNp, labVNp
 
 
@@ -160,12 +173,24 @@ def readTestPic():
         testnp = np.asarray(testImg)
         testImgNp[k, :, :, :] = testnp
         k += 1
+
+    if not os.path.exists(dataRootPath + dataSavedPath):
+        os.mkdir(dataRootPath + dataSavedPath)
+    np.save(dataRootPath + dataSavedPath + dataSavedTestNp, testImgNp)
+    np.save(dataRootPath + dataSavedPath + dataSavedTestName, testFiles)
     return testImgNp, testFiles
 
 
 class myDataSet(Data.Dataset):
     def __init__(self, type):
-        imgTNp, imgVNp, labTNp, labVNp = readTrainAndValPic()
+        if aConfigration.NEED_RESTART_READ_TRAIN_DATA:
+            imgTNp, imgVNp, labTNp, labVNp = readTrainAndValPic()
+        else:
+            imgTNp = np.load(dataRootPath + dataSavedPath + dataSavedImgTNp)
+            imgVNp = np.load(dataRootPath + dataSavedPath + dataSavedImgVNp)
+            labTNp = np.load(dataRootPath + dataSavedPath + dataSavedLabTNp)
+            labVNp = np.load(dataRootPath + dataSavedPath + dataSavedLabVNp)
+
         if type == aConfigration.TRAIN:
             self.x = imgTNp
             self.y = labTNp
@@ -181,8 +206,12 @@ class myDataSet(Data.Dataset):
 
 class myTestSet(Data.Dataset):
     def __init__(self):
-        testNp, testImgName = readTestPic()
-
+        if aConfigration.NEED_RESTART_READ_TEST_DATA:
+            testNp, testImgName = readTestPic()
+        else:
+            testNp = np.load(dataRootPath + dataSavedPath + dataSavedTestNp)
+            testImgName = np.load(dataRootPath + dataSavedPath + dataSavedTestName)
+            testImgName = list(testImgName)
         self.x = testNp
         self.y = testImgName
 
