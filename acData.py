@@ -5,6 +5,7 @@ import torch
 import torch.utils.data as Data
 import json
 import aConfigration
+from tqdm import tqdm
 
 dataRootPath = '../datas'
 trainPath = '/AgriculturalDisease_trainingset'
@@ -114,7 +115,7 @@ def readTrainAndValPic():
 
     t = 0
     # 处理训练集图片:挨个处理大小，转换numpy
-    for pic in listPicTrain:
+    for pic in tqdm(listPicTrain):
         imageT = Image.open(dataRootPath + trainPath + commonImgPath + pic)
         # 转换非RGB图片
         if imageT.mode != 'RGB':
@@ -126,7 +127,7 @@ def readTrainAndValPic():
 
     v = 0
     # # 处理验证集图片:挨个处理大小，转换numpy
-    for pic in listPicVal:
+    for pic in tqdm(listPicVal):
         imageV = Image.open(dataRootPath + validPath + commonImgPath + pic)
         # 转换非RGB图片
         if imageV.mode != 'RGB':
@@ -144,13 +145,15 @@ def readTrainAndValPic():
 
 
 def readTestPic():
-    testFiles = os.listdir(dataRootPath + testPath + commonImgPath)
+    # testFiles = os.listdir(dataRootPath + testPath + commonImgPath)
+    testFiles = os.listdir(dataRootPath + validPath + commonImgPath)    #temper for output eval predion json
     if aConfigration.PREVIEW_TEST:
         testFiles = testFiles[:aConfigration.PREVIEW_TEST_NUM]
     testImgNp = np.zeros([len(testFiles), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3])
     k = 0
-    for testFile in testFiles:
-        testImg = Image.open(dataRootPath + testPath + commonImgPath + testFile)
+    for testFile in tqdm(testFiles):
+        # testImg = Image.open(dataRootPath + testPath + commonImgPath + testFile)
+        testImg = Image.open(dataRootPath + validPath + commonImgPath + testFile)    #temper for output eval predion json
         testImg = testImg.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))
         if testImg.mode != 'RGB':
             testImg = testImg.convert('RGB')
@@ -169,6 +172,19 @@ class myDataSet(Data.Dataset):
         elif type == aConfigration.EVAL:
             self.x = imgVNp
             self.y = labVNp
+
+    def __getitem__(self, item):
+        return torch.from_numpy(self.x[item]),  self.y[item]
+
+    def __len__(self):
+        return len(self.x)
+
+class myTestSet(Data.Dataset):
+    def __init__(self):
+        testNp, testImgName = readTestPic()
+
+        self.x = testNp
+        self.y = testImgName
 
     def __getitem__(self, item):
         return torch.from_numpy(self.x[item]),  self.y[item]

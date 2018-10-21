@@ -6,6 +6,7 @@ import numpy as np
 import json
 import os
 from tqdm import tqdm
+import torch.utils.data as Data
 
 MODEL_SAVED_PATH  = "/model_saved/alexmodel.pkl"
 DATA_ROOT_PATH = '../datas'
@@ -45,7 +46,7 @@ def test():
 
     # for testItem in testTs:
     for site in tqdm(batch_site):
-        test_batch = testTs[site[0]:site[1]]
+        # test_batch = testTs[site[0]:site[1]]
         test_batch = test_batch.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
 
 
@@ -72,18 +73,18 @@ def test():
     # outputJson(listPre)
     outputJson(prediction)
 
-def outputJson(listPre):
+def outputJson(listPre  , testImgName):
     listPreNp = np.array(listPre)
     list = []
     i = 0
-    for pre in range(len(listPre)):
+    for pre in listPre:
         dict = {}
         dict['image_id'] = testImgName[i]
         dict['disease_class'] = str(pre)
 
         i += 1
         list.append(dict)
-    print('dict: '+ str(list))
+    # print('dict: '+ str(list))
 
     if not os.path.exists(DATA_ROOT_PATH + SUBMIT):
         os.mkdir(DATA_ROOT_PATH + SUBMIT)
@@ -91,51 +92,69 @@ def outputJson(listPre):
     jsFile = open(DATA_ROOT_PATH + SUBMIT + SUBMIT_JOSN, 'w', encoding='utf-8')
     res = json.dumps(list, ensure_ascii=False)
     jsFile.write(res)
-    print('dict: '+ str(list))
+    print('dict: '+ str(list[:50]))
 
 
 
 def test2():
     print(6)
+    prediction = []
+    for index , (testdata , testImgName) in enumerate(testLoader):
+        # testdata = torch.from_numpy(testdata)
+        testdata = testdata.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
+        testdata = testdata.type(torch.FloatTensor)
 
-    # print("see shape: "+str(testTs.shape))
-    # prediction = model(testTs.cuda())
-    prediction1 = model(testTs1)
-    prediction2 = model(testTs2)
-    prediction3 = model(testTs3)
+        if torch.cuda.is_available():
+            predictBatch = model(testdata.cuda())
+        else:
+            predictBatch = model(testdata)
 
-    prediction = torch.cat([prediction1, prediction2, prediction3])
+        for preOne in predictBatch:
+            if torch.cuda.is_available():
+                preOneIdx = preOne.detach().cpu().numpy().argmax()
+            else:
+                preOneIdx = preOne.detach().numpy().argmax()
+
+            prediction.append(preOneIdx)
 
     print(7)
-    pres = []
-    for i in range(len(prediction)):
-        #print('see predict: '+str(prediction[i][:20]))
-        pre = prediction[i]
-        pre = pre.detach().cpu().numpy().argmax()
-        pres.append(pre)
-    print('see index: '+str(prediction.argmax(1)))
-    outputJson(pres)
+    # pres = []
+    # for i in range(len(prediction)):
+    #     pre = prediction[i]
+    #     pre = pre.detach().cpu().numpy().argmax()
+    #     pres.append(pre)
+    # print('see index: '+str(prediction.argmax(1)))
+    outputJson(prediction , testImgName)
 
 
 if __name__ == '__main__':
-    testNp, testImgName = acData.readTestPic()
-    print(1)
-    testTs = torch.from_numpy(testNp)
-    print(2)
-    testTs = testTs.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
-    print(2.5)
+    # 更改数据加载为dataset法
+    # testNp, testImgName = acData.readTestPic()
+    testSet = acData.myTestSet()
+    testLoader = Data.DataLoader(testSet, batch_size=aConfigration.BATCH_SIZE , shuffle=False)
+
+
+    # 移到遍历loader的每个batch中处理。
+    # print(1)
+    # testTs = torch.from_numpy(testNp)
+    # print(2)
+    # testTs = testTs.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
+    # print(2.5)
+    # testTs = testTs.type(torch.FloatTensor)
+
+
 
 
     #下面防止内存爆炸
-    testTs1 = testTs[0: len(testTs) / 3]
-    testTs2 = testTs[len(testTs) / 3 : len(testTs) / 3 * 2]
-    testTs3 = testTs[len(testTs) / 3 * 2 : len(testTs) / 3]
+    # print(str(len(testTs) / 3))
+    # testTs1 = testTs[0: int(len(testTs) / 3)]
+    # testTs2 = testTs[int(len(testTs) / 3) : int(len(testTs) / 3 * 2)]
+    # testTs3 = testTs[int(len(testTs) / 3 * 2) : int(len(testTs) / 3)]
+    #
+    # testTs1 = testTs1.type(torch.FloatTensor).cuda(0)
+    # testTs2 = testTs2.type(torch.FloatTensor).cuda(1)
+    # testTs3 = testTs3.type(torch.FloatTensor).cuda(2)
 
-    testTs1 = testTs1.type(torch.FLoatTensor).cuda(0)
-    testTs2 = testTs2.type(torch.FLoatTensor).cuda(1)
-    testTs3 = testTs3.type(torch.FLoatTensor).cuda(2)
-
-    # testTs = testTs.type(torch.FloatTensor)
 
 
 
