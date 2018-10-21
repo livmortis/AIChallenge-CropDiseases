@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c37cf255-c553-4b7a-b329-1527fb67313b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/aConfigration.py" afterPath="$PROJECT_DIR$/aConfigration.py" />
-      <change beforePath="$PROJECT_DIR$/acData.py" afterPath="$PROJECT_DIR$/acData.py" />
       <change beforePath="$PROJECT_DIR$/adTrain.py" afterPath="$PROJECT_DIR$/adTrain.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="adTrain.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="adTrain.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/adTrain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="72" column="63" lean-forward="true" selection-start-line="72" selection-start-column="63" selection-end-line="72" selection-end-column="63" />
+            <state relative-caret-position="97">
+              <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -30,8 +28,8 @@
       <file leaf-file-name="aConfigration.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/aConfigration.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="165">
+              <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -40,8 +38,8 @@
       <file leaf-file-name="acData.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/acData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="150" column="25" lean-forward="false" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="25" />
+            <state relative-caret-position="111">
+              <caret line="119" column="29" lean-forward="true" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -49,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="acModel.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="acModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/acModel.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="735">
@@ -72,8 +70,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>prediction</find>
-      <find>TEST_PIC_NUM</find>
       <find>isGPU</find>
       <find>5</find>
       <find>criterion</find>
@@ -92,7 +88,6 @@
       <find>LR</find>
       <find>PREVIEW</find>
       <find>temper</find>
-      <find>lrSchedule</find>
       <find>imgTNp</find>
       <find>NEED_RESTART_READ_TEST_DATA</find>
       <find>readTestPic</find>
@@ -100,8 +95,11 @@
       <find>dataSavedTestNp</find>
       <find>testLoader</find>
       <find>testImgName</find>
-      <find>readTrainAndValPic</find>
       <find>testFiles</find>
+      <find>np.zeros([len(listPicTrain)</find>
+      <find>readTrainAndValPic</find>
+      <find>EPOCH</find>
+      <find>lrSchedule</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -116,8 +114,8 @@
         <option value="$PROJECT_DIR$/../datas/cloudSubmit_1/plant_disease_recognition2018_eval.py" />
         <option value="$PROJECT_DIR$/adTest.py" />
         <option value="$PROJECT_DIR$/acData.py" />
-        <option value="$PROJECT_DIR$/adTrain.py" />
         <option value="$PROJECT_DIR$/aConfigration.py" />
+        <option value="$PROJECT_DIR$/adTrain.py" />
       </list>
     </option>
   </component>
@@ -304,7 +302,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0880902" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27811366" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28174123" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -511,38 +509,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/adTrain.py">
+    <entry file="file://$PROJECT_DIR$/acModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="72" column="63" lean-forward="true" selection-start-line="72" selection-start-column="63" selection-end-line="72" selection-end-column="63" />
+        <state relative-caret-position="735">
+          <caret line="49" column="15" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="15" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aConfigration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/acData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="150" column="25" lean-forward="false" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="25" />
+        <state relative-caret-position="111">
+          <caret line="119" column="29" lean-forward="true" selection-start-line="119" selection-start-column="29" selection-end-line="119" selection-end-column="29" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/acModel.py">
+    <entry file="file://$PROJECT_DIR$/aConfigration.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="15" lean-forward="false" selection-start-line="49" selection-start-column="5" selection-end-line="49" selection-end-column="15" />
+        <state relative-caret-position="165">
+          <caret line="11" column="5" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/adTrain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

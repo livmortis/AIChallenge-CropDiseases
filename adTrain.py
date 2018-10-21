@@ -35,11 +35,9 @@ def train():
         output = alexnet(x)
         loss = criterion(output, y)
         loss.backward()
-        # optim.step()
-        lrSchedule.step(loss)
+        optim.step()
         print("batch: " + str(index))
         print('loss is ' + str(loss))
-
     print("epoch: " + str(i))
     torch.save(alexnet, DATA_ROOT_PATH + MODEL_SAVED_PATH + MODEL_SAVED_FILE)
 
@@ -60,7 +58,7 @@ def val():
         predict = alexnet(x)
         loss = criterion(predict, y)
         print('validation data loss is ' + str(loss))
-
+    lrSchedule.step(loss)
 
 if __name__ == '__main__':
     # Tdata, Tlabel = acData.myDataSet(TRAIN)   #错，dataset不是这么用
