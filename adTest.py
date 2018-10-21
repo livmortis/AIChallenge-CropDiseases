@@ -11,8 +11,8 @@ import torch.utils.data as Data
 MODEL_SAVED_PATH  = "/model_saved/alexmodel.pkl"
 DATA_ROOT_PATH = '../datas'
 SUBMIT = '/submit'
-# SUBMIT_JOSN = '/submitjson.json'
-SUBMIT_JOSN = '/submitjson_eval.json'   #temper
+SUBMIT_JOSN = '/submitjson.json'
+# SUBMIT_JOSN = '/submitjson_eval.json'   #temper
 
 isGPU = False
 
@@ -79,6 +79,8 @@ def outputJson(listPre  , testImgName):
     i = 0
     for pre in listPre:
         dict = {}
+        print('the index: ' + str(i))
+        print('shape: ' + str(len(testImgName)))
         dict['image_id'] = testImgName[i]
         dict['disease_class'] = str(pre)
 
@@ -99,6 +101,7 @@ def outputJson(listPre  , testImgName):
 def test2():
     print(6)
     prediction = []
+    testImgNames = []
     for index , (testdata , testImgName) in enumerate(testLoader):
         # testdata = torch.from_numpy(testdata)
         testdata = testdata.view(-1, 3, aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE)
@@ -117,6 +120,8 @@ def test2():
 
             prediction.append(preOneIdx)
 
+        testImgNames.extend(list(testImgName))
+    print(testImgNames)
     print(7)
     # pres = []
     # for i in range(len(prediction)):
@@ -124,7 +129,7 @@ def test2():
     #     pre = pre.detach().cpu().numpy().argmax()
     #     pres.append(pre)
     # print('see index: '+str(prediction.argmax(1)))
-    outputJson(prediction , testImgName)
+    outputJson(prediction , testImgNames)
 
 
 if __name__ == '__main__':

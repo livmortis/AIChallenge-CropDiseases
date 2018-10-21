@@ -145,15 +145,15 @@ def readTrainAndValPic():
 
 
 def readTestPic():
-    # testFiles = os.listdir(dataRootPath + testPath + commonImgPath)
-    testFiles = os.listdir(dataRootPath + validPath + commonImgPath)    #temper for output eval predion json
+    testFiles = os.listdir(dataRootPath + testPath + commonImgPath)
+    # testFiles = os.listdir(dataRootPath + validPath + commonImgPath)    #temper for output eval predion json
     if aConfigration.PREVIEW_TEST:
         testFiles = testFiles[:aConfigration.PREVIEW_TEST_NUM]
     testImgNp = np.zeros([len(testFiles), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3])
     k = 0
     for testFile in tqdm(testFiles):
-        # testImg = Image.open(dataRootPath + testPath + commonImgPath + testFile)
-        testImg = Image.open(dataRootPath + validPath + commonImgPath + testFile)    #temper for output eval predion json
+        testImg = Image.open(dataRootPath + testPath + commonImgPath + testFile)
+        # testImg = Image.open(dataRootPath + validPath + commonImgPath + testFile)    #temper for output eval predion json
         testImg = testImg.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))
         if testImg.mode != 'RGB':
             testImg = testImg.convert('RGB')
