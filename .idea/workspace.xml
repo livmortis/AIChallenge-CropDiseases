@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c37cf255-c553-4b7a-b329-1527fb67313b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/aConfigration.py" afterPath="$PROJECT_DIR$/aConfigration.py" />
       <change beforePath="$PROJECT_DIR$/adTrain.py" afterPath="$PROJECT_DIR$/adTrain.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,8 +16,8 @@
       <file leaf-file-name="adTrain.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/adTrain.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="70" column="100" lean-forward="true" selection-start-line="70" selection-start-column="100" selection-end-line="70" selection-end-column="100" />
+            <state relative-caret-position="265">
+              <caret line="72" column="142" lean-forward="false" selection-start-line="72" selection-start-column="138" selection-end-line="72" selection-end-column="142" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -52,8 +50,8 @@
       <file leaf-file-name="acModel.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/acModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+            <state relative-caret-position="180">
+              <caret line="12" column="11" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="11" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -116,8 +114,8 @@
         <option value="$PROJECT_DIR$/../datas/cloudSubmit_1/plant_disease_recognition2018_eval.py" />
         <option value="$PROJECT_DIR$/adTest.py" />
         <option value="$PROJECT_DIR$/acData.py" />
-        <option value="$PROJECT_DIR$/adTrain.py" />
         <option value="$PROJECT_DIR$/aConfigration.py" />
+        <option value="$PROJECT_DIR$/adTrain.py" />
       </list>
     </option>
   </component>
@@ -521,16 +519,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/acModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/aConfigration.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -539,10 +527,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/acModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="11" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/adTrain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="70" column="100" lean-forward="true" selection-start-line="70" selection-start-column="100" selection-end-line="70" selection-end-column="100" />
+        <state relative-caret-position="265">
+          <caret line="72" column="142" lean-forward="false" selection-start-line="72" selection-start-column="138" selection-end-line="72" selection-end-column="142" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
