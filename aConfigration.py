@@ -20,5 +20,5 @@ PREVIEW_TEST_NUM = 54
 # TEST_PIC_NUM = 4959
 TEST_PIC_NUM = 4982  # temper, neval number
 
-NEED_RESTART_READ_TRAIN_DATA = False   # 第一次加载图片时为true。
+NEED_RESTART_READ_TRAIN_DATA = True   # 第一次加载图片时为true。
 NEED_RESTART_READ_TEST_DATA = False   # 第一次加载图片时为true。

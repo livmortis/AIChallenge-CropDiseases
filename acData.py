@@ -100,7 +100,9 @@ def readTrainAndValPic():
     '''制作标签集'''
     i = 0
     j = 0
-    labTNp = np.zeros(len(tLabDict))
+    # labTNp = np.zeros(len(tLabDict))
+    # 为了扩大数据，将验证集加入训练集
+    labTNp = np.zeros(len(tLabDict)+len(vLabDict))
     for labTItem in tLabDict:
         lab = labTItem['disease_class']
         labTNp[i] = lab
@@ -110,13 +112,15 @@ def readTrainAndValPic():
         lab2 = labVItem['disease_class']
         labVNp[j] = lab2
         j += 1
-
-
-
+        # 为了扩大数据，将验证集加入训练集
+        labTNp[i] = lab2
+        i += 1
 
 
     '''制作数据集'''
-    imgTNp = np.zeros([len(listPicTrain), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
+    # imgTNp = np.zeros([len(listPicTrain), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
+    # 为了扩大数据，将验证集加入训练集
+    imgTNp = np.zeros([len(listPicTrain + listPicVal), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
     imgVNp = np.zeros([len(listPicVal), aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE, 3], dtype=np.uint8)
 
 
@@ -131,6 +135,7 @@ def readTrainAndValPic():
         imageT = np.asarray(imageT)
         imgTNp[t, :, :, :] = imageT
         t += 1
+        print('t is: '+ str(t))
 
     v = 0
     # # 处理验证集图片:挨个处理大小，转换numpy
@@ -143,6 +148,14 @@ def readTrainAndValPic():
         imageV = np.asarray(imageV)
         imgVNp[v, :, :, :] = imageV
         v += 1
+
+        # 为了扩大数据，将验证集加入训练集
+        imgTNp[t, :, :, :] = imageV
+        t += 1
+        print('v is: '+ str(v))
+        print('t is: '+ str(t))
+
+
 
     print('look '+ str(len(imgTNp))
                        + ' '
