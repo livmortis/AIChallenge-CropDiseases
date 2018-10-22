@@ -29,6 +29,10 @@ def main():
     readTrainAndValPic()
     readTestPic()
 
+# 没用到。
+# 由于transforms必须放到dataset里，才能保证每次epoch都能调用。
+# 但本代码里的dataset操作的是numpy，无法做增强。
+# 因为需要提前将图片转为numpy，存入本地，才不用每次都读取图片。
 
 trans = transforms.Compose([
     transforms.RandomResizedCrop(aConfigration.IMAGE_SIZE),
@@ -144,7 +148,7 @@ def readTrainAndValPic():
         if imageT.mode != 'RGB':
             imageT = imageT.convert('RGB')
         imageT = imageT.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))  #原始图片 shape(581, 256, 3)
-        imageT = trans(imageT)  # data augmentation 数据增强
+        # imageT = trans(imageT)  # data augmentation 数据增强  ##放在这里错，只执行一次，并没有增强数据。
 
         imageT = np.asarray(imageT)
         imgTNp[t, :, :, :] = imageT
