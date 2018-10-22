@@ -68,7 +68,7 @@ if __name__ == '__main__':
     valLoader = Data.DataLoader(valDataset, aConfigration.BATCH_SIZE, shuffle=True)
 
     alexnet = acModel.build_model()     # model初始化
-    optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR)   # optim初始化
+    optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR, weight_decay=aConfigration.WEIGHT_DECAY)   # optim初始化
     # optim = Optim.Adam([{'params':alexnet.features.parameters(), 'lr': aConfigration.LR_FINETUNE_LAYER},
     #                     {'params':alexnet.classifier.parameters()}], lr=aConfigration.LR)   # 添加分层lr  ##取消分层，效果不好
     lrSchedule = Optim.lr_scheduler.ReduceLROnPlateau(optim, mode='min',
