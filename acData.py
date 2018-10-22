@@ -3,9 +3,11 @@ import os
 import numpy as np
 import torch
 import torch.utils.data as Data
+from torchvision import transforms
 import json
 import aConfigration
 from tqdm import tqdm
+
 
 dataRootPath = '../datas'
 trainPath = '/AgriculturalDisease_trainingset'
@@ -26,6 +28,16 @@ dataSavedTestName = "/testImgName.npy"
 def main():
     readTrainAndValPic()
     readTestPic()
+
+
+trans = transforms.Compose([
+    transforms.RandomResizedCrop(aConfigration.IMAGE_SIZE),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
+    transforms.RandomRotation(10),
+    transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1)
+
+])
 
 
 def check_contain_chinese(check_str):
@@ -132,10 +144,12 @@ def readTrainAndValPic():
         if imageT.mode != 'RGB':
             imageT = imageT.convert('RGB')
         imageT = imageT.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))  #原始图片 shape(581, 256, 3)
+        imageT = trans(imageT)  # data augmentation 数据增强
+
         imageT = np.asarray(imageT)
         imgTNp[t, :, :, :] = imageT
         t += 1
-        print('t is: '+ str(t))
+        # print('t is: '+ str(t))
 
     v = 0
     # # 处理验证集图片:挨个处理大小，转换numpy
@@ -152,8 +166,8 @@ def readTrainAndValPic():
         # 为了扩大数据，将验证集加入训练集
         imgTNp[t, :, :, :] = imageV
         t += 1
-        print('v is: '+ str(v))
-        print('t is: '+ str(t))
+        # print('v is: '+ str(v))
+        # print('t is: '+ str(t))
 
 
 
@@ -192,6 +206,8 @@ def readTestPic():
     np.save(dataRootPath + dataSavedPath + dataSavedTestNp, testImgNp)
     np.save(dataRootPath + dataSavedPath + dataSavedTestName, testFiles)
     return testImgNp, testFiles
+
+
 
 
 class myDataSet(Data.Dataset):
