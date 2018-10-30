@@ -79,8 +79,8 @@ def outputJson(listPre  , testImgName):
     i = 0
     for pre in listPre:
         dict = {}
-        print('the index: ' + str(i))
-        print('shape: ' + str(len(testImgName)))
+        # print('the index: ' + str(i))
+        # print('shape: ' + str(len(testImgName)))
         dict['image_id'] = testImgName[i]
         dict['disease_class'] = str(pre)
 
@@ -94,7 +94,7 @@ def outputJson(listPre  , testImgName):
     jsFile = open(DATA_ROOT_PATH + SUBMIT + SUBMIT_JOSN, 'w', encoding='utf-8')
     res = json.dumps(list, ensure_ascii=False)
     jsFile.write(res)
-    print('dict: '+ str(list[:50]))
+    # print('dict: '+ str(list[:50]))
 
 
 

@@ -10,19 +10,23 @@ def main():
 
 
 def build_model():
-    alexnet = MODEL.alexnet(pretrained=False)
+    # alexnet = MODEL.alexnet(pretrained=True)
+    resnet50 = MODEL.resnet50(pretrained=True)
+    # alexnet.classifier = nn.Sequential(
+    #     nn.Dropout(0.5),
+    #     nn.Linear(9216, 4096),
+    #     nn.ReLU(),
+    #     nn.Dropout(0.5),
+    #     nn.Linear(4096, 2048),
+    #     nn.ReLU(),
+    #     nn.Linear(2048, aConfigration.LABEL_NUMS),
+    # )
     # print(alexnet)
-    alexnet.classifier = nn.Sequential(
-        nn.Dropout(0.5),
-        nn.Linear(9216, 4096),
-        nn.ReLU(),
-        nn.Dropout(0.5),
-        nn.Linear(4096, 2048),
-        nn.ReLU(),
-        nn.Linear(2048, aConfigration.LABEL_NUMS),
-    )
-    # print(alexnet)
-    return alexnet
+
+    resnet50.avgpool = nn.AdaptiveAvgPool2d(1)
+    resnet50.fc = nn.Linear(2048,aConfigration.LABEL_NUMS)
+
+    return resnet50
 
 
 if __name__ == '__main__':
