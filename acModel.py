@@ -12,6 +12,8 @@ def main():
 def build_model():
     # alexnet = MODEL.alexnet(pretrained=True)
     resnet50 = MODEL.resnet50(pretrained=True)
+    for layer in resnet50.parameters():
+        layer.need_grad = False
     # alexnet.classifier = nn.Sequential(
     #     nn.Dropout(0.5),
     #     nn.Linear(9216, 4096),
