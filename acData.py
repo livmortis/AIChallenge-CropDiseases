@@ -43,6 +43,25 @@ trans = transforms.Compose([
 
 ])
 
+transCopyV = transforms.Compose([
+    transforms.Resize((aConfigration.IMAGE_SIZE_COPY, aConfigration.IMAGE_SIZE_COPY)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                std=[0.229, 0.224, 0.225])
+])
+
+transCopyT = transforms.Compose([
+    transforms.Resize((aConfigration.IMAGE_SIZE_COPY, aConfigration.IMAGE_SIZE_COPY)),
+    transforms.RandomRotation(30),
+    transforms.RandomHorizontalFlip(),
+    transforms.RandomVerticalFlip(),
+    transforms.RandomAffine(45),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                std=[0.229, 0.224, 0.225])
+])
+
+
 
 def check_contain_chinese(check_str):
     for ch in check_str:
@@ -147,13 +166,16 @@ def readTrainAndValPic():
         # 转换非RGB图片
         if imageT.mode != 'RGB':
             imageT = imageT.convert('RGB')
-        imageT = imageT.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))  #原始图片 shape(581, 256, 3)
+
+
+
+        # 为添加数据增强1，Image转numpy移除（为了将Image传到DataSet中）
+        # imageT = imageT.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))  #原始图片 shape(581, 256, 3)
         # imageT = trans(imageT)  # data augmentation 数据增强  ##放在这里错，只执行一次，并没有增强数据。
 
-        imageT = np.asarray(imageT)
-        imgTNp[t, :, :, :] = imageT
-        t += 1
-        # print('t is: '+ str(t))
+        # imageT = np.asarray(imageT)
+        # imgTNp[t, :, :, :] = imageT
+        # t += 1
 
     v = 0
     # # 处理验证集图片:挨个处理大小，转换numpy
@@ -162,30 +184,34 @@ def readTrainAndValPic():
         # 转换非RGB图片
         if imageV.mode != 'RGB':
             imageV = imageV.convert('RGB')
-        imageV = imageV.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))
-        imageV = np.asarray(imageV)
-        imgVNp[v, :, :, :] = imageV
-        v += 1
-
-        # 为了扩大数据，将验证集加入训练集
-        imgTNp[t, :, :, :] = imageV
-        t += 1
-        # print('v is: '+ str(v))
-        # print('t is: '+ str(t))
 
 
+        # 为添加数据增强2，Image转numpy移除（为了将Image传到DataSet中）
+        # imageV = imageV.resize((aConfigration.IMAGE_SIZE, aConfigration.IMAGE_SIZE))
+        # imageV = np.asarray(imageV)
+        # imgVNp[v, :, :, :] = imageV
+        # v += 1
+        #
+        # # 为了扩大数据，将验证集加入训练集
+        # imgTNp[t, :, :, :] = imageV
+        # t += 1
 
-    print('look '+ str(len(imgTNp))
-                       + ' '
-                       + str(len(imgVNp)))
 
-    if not os.path.exists(dataRootPath + dataSavedPath):
-        os.mkdir(dataRootPath + dataSavedPath)
-    np.save(dataRootPath + dataSavedPath + dataSavedImgTNp, imgTNp)
-    np.save(dataRootPath + dataSavedPath + dataSavedImgVNp, imgVNp)
-    np.save(dataRootPath + dataSavedPath + dataSavedLabTNp, labTNp)
-    np.save(dataRootPath + dataSavedPath + dataSavedLabVNp, labVNp)
-    return imgTNp, imgVNp, labTNp, labVNp
+    #
+    # print('look '+ str(len(imgTNp))
+    #                    + ' '
+    #                    + str(len(imgVNp)))
+
+    # if not os.path.exists(dataRootPath + dataSavedPath):
+    #     os.mkdir(dataRootPath + dataSavedPath)
+
+    # 为添加数据增强3，舍弃图片一次加载储存功能。
+    # np.save(dataRootPath + dataSavedPath + dataSavedImgTNp, imgTNp)
+    # np.save(dataRootPath + dataSavedPath + dataSavedImgVNp, imgVNp)
+    # np.save(dataRootPath + dataSavedPath + dataSavedLabTNp, labTNp)
+    # np.save(dataRootPath + dataSavedPath + dataSavedLabVNp, labVNp)
+    # return imgTNp, imgVNp, labTNp, labVNp
+    return imageT, imageV, labTNp, labVNp
 
 
 def readTestPic():
@@ -216,13 +242,20 @@ def readTestPic():
 
 class myDataSet(Data.Dataset):
     def __init__(self, type):
-        if aConfigration.NEED_RESTART_READ_TRAIN_DATA:
-            imgTNp, imgVNp, labTNp, labVNp = readTrainAndValPic()
-        else:
-            imgTNp = np.load(dataRootPath + dataSavedPath + dataSavedImgTNp)
-            imgVNp = np.load(dataRootPath + dataSavedPath + dataSavedImgVNp)
-            labTNp = np.load(dataRootPath + dataSavedPath + dataSavedLabTNp)
-            labVNp = np.load(dataRootPath + dataSavedPath + dataSavedLabVNp)
+
+        # 为添加数据增强4，舍弃图片一次加载储存功能。
+
+
+        imgTNp, imgVNp, labTNp, labVNp = readTrainAndValPic()
+        # if aConfigration.NEED_RESTART_READ_TRAIN_DATA:
+        #     imgTNp, imgVNp, labTNp, labVNp = readTrainAndValPic()
+
+
+        # else:
+        #     imgTNp = np.load(dataRootPath + dataSavedPath + dataSavedImgTNp)
+        #     imgVNp = np.load(dataRootPath + dataSavedPath + dataSavedImgVNp)
+        #     labTNp = np.load(dataRootPath + dataSavedPath + dataSavedLabTNp)
+        #     labVNp = np.load(dataRootPath + dataSavedPath + dataSavedLabVNp)
 
         if type == aConfigration.TRAIN:
             self.x = imgTNp
@@ -232,7 +265,19 @@ class myDataSet(Data.Dataset):
             self.y = labVNp
 
     def __getitem__(self, item):
-        return torch.from_numpy(self.x[item]),  self.y[item]
+        # return torch.from_numpy(self.x[item]),  self.y[item]
+        if type == aConfigration.TRAIN:
+            imageT = self.x
+            imageT = transCopyT(imageT)
+            labelT = self.y
+            return imageT, labelT
+        elif type == aConfigration.EVAL:
+            imageV = self.x
+            imageV - transCopyV(imageV)
+            labelV = self.y
+            return imageV, labelV
+
+
 
     def __len__(self):
         return len(self.x)

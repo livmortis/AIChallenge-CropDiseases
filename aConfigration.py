@@ -1,6 +1,7 @@
 
 
 IMAGE_SIZE = 224
+IMAGE_SIZE_COPY = 650
 TRAIN = "train"
 EVAL = "eval"
 LR = 0.001

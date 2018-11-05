@@ -68,13 +68,19 @@ if __name__ == '__main__':
     valLoader = Data.DataLoader(valDataset, aConfigration.BATCH_SIZE, shuffle=True)
 
     alexnet = acModel.build_model()     # model初始化
-    optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR, weight_decay=aConfigration.WEIGHT_DECAY)   # optim初始化
+    # optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR, weight_decay=aConfigration.WEIGHT_DECAY)   # optim初始化,lr为负三次。
+    optim = Optim.Adam(alexnet.parameters(), lr=aConfigration.LR_FINETUNE_LAYER, weight_decay=aConfigration.WEIGHT_DECAY)   # optim初始化，lr为负四次。
     # optim = Optim.Adam([{'params':alexnet.features.parameters(), 'lr': aConfigration.LR_FINETUNE_LAYER},
     #                     {'params':alexnet.classifier.parameters()}], lr=aConfigration.LR , weight_decay=aConfigration.WEIGHT_DECAY)   # 添加分层lr  ##取消分层，效果不好  ###再次加上，效果很好
-    lrSchedule = Optim.lr_scheduler.ReduceLROnPlateau(optim, mode='min',
-                                                      factor=aConfigration.LR_DECAY,
-                                                      patience=aConfigration.LR_SCHEDULE_PATIENCE,
-                                                      verbose=True )
+    # lrSchedule = Optim.lr_scheduler.ReduceLROnPlateau(optim, mode='min',
+    #                                                   factor=aConfigration.LR_DECAY,
+    #                                                   patience=aConfigration.LR_SCHEDULE_PATIENCE,
+    #                                                   verbose=True )
+    lrSchedule = Optim.lr_scheduler.StepLR(optim,step_size=8, gamma=0.1)
+
+
+
+
     criterion = torch.nn.CrossEntropyLoss()         # loss初始化
 
     if isGPU:
